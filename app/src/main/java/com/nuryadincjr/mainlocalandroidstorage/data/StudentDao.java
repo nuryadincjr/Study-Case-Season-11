@@ -6,9 +6,9 @@ import androidx.room.Update;
 import androidx.room.Delete;
 import androidx.room.Query;
 
-import java.util.List;
-
 import static androidx.room.OnConflictStrategy.REPLACE;
+
+import java.util.List;
 
 
 @Dao

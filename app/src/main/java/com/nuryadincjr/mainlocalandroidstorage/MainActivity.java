@@ -1,16 +1,15 @@
 package com.nuryadincjr.mainlocalandroidstorage;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.nuryadincjr.mainlocalandroidstorage.data.Student;
 import com.nuryadincjr.mainlocalandroidstorage.data.StudentDatabases;
-import com.nuryadincjr.mainlocalandroidstorage.util.AppExecutors;
 import com.nuryadincjr.mainlocalandroidstorage.databinding.ActivityMainBinding;
+import com.nuryadincjr.mainlocalandroidstorage.util.AppExecutors;
 
 import java.util.List;
 
@@ -33,11 +32,20 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AddStudentActivity.class);
             startActivity(intent);
         });
+
+        binding.srLayout.setOnRefreshListener(() -> {
+            getData();
+            binding.srLayout.setRefreshing(false);
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        getData();
+    }
+
+    private  void getData() {
         AppExecutors.getsIntance().diskID().execute(() -> {
             List<Student> student = studentDatabases.studentDao().getAllStudent();
             runOnUiThread(() -> {

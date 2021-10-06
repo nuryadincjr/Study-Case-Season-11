@@ -33,11 +33,18 @@ public class StudentAdapter  extends RecyclerView.Adapter<StudentViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         Student student = data.get(position);
+
         holder.setDataToView(student);
+        holder.itemView.setOnClickListener(v -> {
+            holder.openMenuEdit(v, data.get(position).getUid(),
+                    data.get(position).getFullName(),
+                    data.get(position).getEmail());
+        });
     }
 
     @Override
     public int getItemCount() {
         return data.size();
     }
+
 }
